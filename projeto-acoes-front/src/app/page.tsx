@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StockInput from "../components/stock-input";
 import GoogleChart from "../components/google-chart";
 import SearchHistory from "../components/search-history";
@@ -11,6 +11,13 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [history, setHistory] = useState<{ ticker: string; startDate: string; endDate: string }[]>([]);
+
+  useEffect(() => {
+    const savedHistory = localStorage.getItem("searchHistory");
+    if (savedHistory) {
+      setHistory(JSON.parse(savedHistory));
+    }
+  }, []);
 
   const handleSearch = async (ticker: string, startDate: string, endDate: string) => {
     setLoading(true);
@@ -52,7 +59,7 @@ export default function Home() {
       </div>
 
       {showSnackbar && (
-        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500">
+        <div id='snackbar' className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded shadow-lg transition-opacity duration-500">
           {errorMessage}
         </div>
       )}

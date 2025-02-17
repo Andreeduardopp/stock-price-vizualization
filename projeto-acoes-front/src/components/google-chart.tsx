@@ -10,9 +10,8 @@ export default function GoogleChart({ stockData }: GoogleChartProps) {
     return <p className="text-center text-gray-500">No data available</p>;
   }
 
-  // Transform data for Google Charts
   const chartData = [
-    ["Date", "Price"], // Column names
+    ["Date", "Price"], 
     ...stockData.map((item) => [item.date, item.price]),
   ];
 
