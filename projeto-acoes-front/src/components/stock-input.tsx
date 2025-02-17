@@ -10,10 +10,10 @@ interface StockInputProps {
 
 export default function StockInput({ onSearch }: StockInputProps) {
   const [ticker, setTicker] = useState("");
-  const [startDate, setStartDate] = useState<Date | null>(subMonths(new Date(), 1)); // Default: Last month
+  const [startDate, setStartDate] = useState<Date | null>(subMonths(new Date(), 1));
   const [endDate, setEndDate] = useState<Date | null>(new Date());
-  const [error] = useState("");
-  const [preset, setPreset] = useState("1m"); // Default: Last month
+  const [error, setError] = useState<string>("");
+  const [preset, setPreset] = useState("1m");
 
   const handlePresetChange = (value: string) => {
     setPreset(value);
@@ -26,9 +26,17 @@ export default function StockInput({ onSearch }: StockInputProps) {
     } else if (value === "5y") {
       setStartDate(subYears(today, 5));
     } else {
-      setStartDate(null); // Allow manual selection
+      setStartDate(null); 
     }
     setEndDate(today);
+  };
+
+  const validateDates = (start: Date | null, end: Date | null) => {
+    if (start && end && end < start) {
+      setError("A data de término deve ser maior que a data de início.");
+    } else {
+      setError("");
+    }
   };
 
   const handleSearch = () => {
@@ -41,7 +49,6 @@ export default function StockInput({ onSearch }: StockInputProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Stock Ticker Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 ">Stock Ticker:</label>
         <input
@@ -97,7 +104,10 @@ export default function StockInput({ onSearch }: StockInputProps) {
         <label className="block text-sm text-gray-700 font-medium">End Date:</label>
         <DatePicker
           selected={endDate}
-          onChange={(date) => setEndDate(date)}
+          onChange={(date) => {
+            setEndDate(date);
+            validateDates(startDate, date);
+          }}
           className="border p-2 text-gray-700 rounded-md w-full border-gray-800"
           dateFormat="yyyy-MM-dd"
           maxDate={new Date()} 
@@ -108,7 +118,7 @@ export default function StockInput({ onSearch }: StockInputProps) {
       <button
         onClick={handleSearch}
         className="bg-blue-600 text-white p-2 rounded-md disabled:opacity-50"
-        disabled={!ticker.trim() || !startDate || !endDate}
+        disabled={!ticker.trim() || !startDate || !endDate || !!error}
       >
         Search
       </button>
