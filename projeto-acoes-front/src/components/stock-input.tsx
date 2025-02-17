@@ -52,6 +52,7 @@ export default function StockInput({ onSearch }: StockInputProps) {
       <div>
         <label className="block text-sm font-medium text-gray-700 ">Stock Ticker:</label>
         <input
+          id="stock-ticker"
           type="text"
           placeholder="Enter Stock Ticker (e.g., AAPL)"
           value={ticker}
@@ -64,24 +65,28 @@ export default function StockInput({ onSearch }: StockInputProps) {
         <label className="block text-sm text-gray-700 font-medium">Select Date Range:</label>
         <div className="flex gap-2">
           <button
+            id="1month"
             className={`p-2 rounded-md text-gray-700  ${preset === "1m" ? "bg-blue-300 text-white" : "bg-gray-200"}`}
             onClick={() => handlePresetChange("1m")}
           >
             Last Month
           </button>
           <button
+            id="1year"
             className={`p-2 rounded-md text-gray-700 ${preset === "1y" ? "bg-blue-300 text-white" : "bg-gray-200"}`}
             onClick={() => handlePresetChange("1y")}
           >
             Last Year
           </button>
           <button
+            id="5years"
             className={`p-2 rounded-md text-gray-700 ${preset === "5y" ? "bg-blue-300 text-white" : "bg-gray-200"}`}
             onClick={() => handlePresetChange("5y")}
           >
             Last 5 Years
           </button>
           <button
+            id="custom"
             className={`p-2 rounded-md text-gray-700 ${preset === "custom" ? "bg-blue-300 text-white" : "bg-gray-200"}`}
             onClick={() => handlePresetChange("custom")}
           >
@@ -92,6 +97,7 @@ export default function StockInput({ onSearch }: StockInputProps) {
       <div>
         <label className="block text-sm text-gray-700 font-medium">Start Date:</label>
         <DatePicker
+          id="start-date"
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           className="border p-2 text-gray-700 rounded-md w-full border-gray-800"
@@ -103,6 +109,7 @@ export default function StockInput({ onSearch }: StockInputProps) {
       <div>
         <label className="block text-sm text-gray-700 font-medium">End Date:</label>
         <DatePicker
+          id="end-date"
           selected={endDate}
           onChange={(date) => {
             setEndDate(date);
@@ -116,6 +123,7 @@ export default function StockInput({ onSearch }: StockInputProps) {
       </div>
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <button
+        id="search"
         onClick={handleSearch}
         className="bg-blue-600 text-white p-2 rounded-md disabled:opacity-50"
         disabled={!ticker.trim() || !startDate || !endDate || !!error}

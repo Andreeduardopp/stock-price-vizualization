@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row min-h-screen lg:h-screen">
       <div className="w-full lg:w-1/4 bg-gray-100 p-6 flex flex-col">
         <h2 className="text-lg font-semibold mb-4">Stock Search</h2>
         <StockInput onSearch={handleSearch} />
