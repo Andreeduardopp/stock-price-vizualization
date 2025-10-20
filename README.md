@@ -1,4 +1,4 @@
-﻿# projeto-acoes-frontend
+﻿# Market stock price
 
 This is a **Next.js** application that allows users to search for stock price history based on a given date range. It displays the results in an **interactive chart** and maintains a **search history** for easy access.
 
@@ -26,3 +26,4 @@ npm install
 ```sh
 npm run dev
 ```
+
